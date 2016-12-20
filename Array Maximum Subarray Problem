@@ -1,0 +1,100 @@
+QUESTION:
+Given an array  of  elements, find the maximum possible sum of a
+i)Contiguous subarray
+ii)Non-contiguous (not necessarily contiguous) subarray.
+Empty subarrays/subsequences should not be considered.
+
+Question mentioned in :https://www.hackerrank.com/challenges/maxsubarray
+-----------------------------------------------------------------------------------------------------------------------------------------
+USING DYNAMIC PROGRAMMING
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        for(int c=0;c<t;c++){
+            int n = sc.nextInt();
+            int a[] = new int[n];
+            int disc_sum =0;
+            int count=0;
+            
+            for(int i=0;i<n;i++){
+                a[i]=sc.nextInt();
+                if(a[i]>0){ 
+                    disc_sum+=a[i];
+                    count=1;
+                }
+                if(count==0){
+                    int aa=Integer.MIN_VALUE;
+                    for(int x=0;x<n;x++){
+                        aa =(int)Math.max(aa,a[x]);
+                    }
+                    disc_sum =aa;
+                }
+            }
+            
+            int max=Integer.MIN_VALUE;
+           
+            for(int s=0;s<n;s++){
+                int sum=0;                       //since we take the sum of previous subarray
+                for(int l=1;l<=n;l++){
+                    if((s+l)>n)            // check whether subarray exceeds array size
+                        break;
+                    sum+= a[s+l-1];
+                    if(max<sum)
+                    max=sum;
+                    
+                } // for loop
+            } //for loop
+            System.out.print(max +" ");
+            System.out.println(disc_sum);
+        }
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+| Using BRUTE- FORCE ALGORITHM |
+ ------------------------------
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();   // number of test cases 
+        for(int c=0;c<t;c++){   // count the cases
+            int n = sc.nextInt();
+            int a[] = new int[n];
+            int disc_sum =0;    // maximum non-continuous sum
+            
+            for(int i=0;i<n;i++){
+                a[i]=sc.nextInt();
+                if(a[i]>0) 
+                    disc_sum+=a[i];
+            }
+            
+            int max=Integer.MIN_VALUE;   // assigning the lowest possible value to the continuous sum
+           
+            for(int l=1;l<=n;l++){       // length of subarray- starts from 1
+                for(int s=0;s<n;s++){    // starting index- starts from 0
+                    if((s+l)>n)
+                        break;
+                    else{
+                        int sum=0;
+                        for(int i=s;i<(s+l);i++)
+                            sum+= a[i];
+                        if(max<sum)
+                            max=sum;
+                    }// else part ends
+                } // for loop ends
+            } //for loop ends
+            System.out.print("Maxm possible sum of Contiguous subarray"+max);
+            System.out.println("Maxm possible sum of Non-contiguous subarray"+disc_sum);
+        } //for loop ends
+    }
+}
