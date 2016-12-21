@@ -23,24 +23,28 @@ class Solution{
 public static int subMatrixSum(int[][] matrix, result res) {
     int maxSum = -Integer.MAX_VALUE;
 
-    for (int i = 1; i <= matrix.length; i++)
-        for (int j = 1; j <= matrix[0].length; j++)
-            for (int iIndex = 0; iIndex < matrix.length - i + 1; iIndex++)
-                for (int jIndex = 0; jIndex < matrix[0].length - j + 1; jIndex++) {
-                    int sum = 0;
-
-                    for (int k_i = iIndex; k_i < iIndex + i; k_i++)
-                        for (int k_j = jIndex; k_j < jIndex + j; k_j++)
-                            sum += matrix[k_i][k_j];
-
-                    if (maxSum < sum) {
-                        maxSum = sum;
-                        res.row = iIndex;
-                        res.col = jIndex;
-                        res.row_size = i;
-                        res.col_size = j;
+    for(int row=1;row<=matrix.length;row++){                     //rows in the given matrix
+        for(int col=1;col<=matrix[0].length;col++){              //cols in the given matrix
+            for(int srow=0;srow<matrix.length-row+1;srow++){     //sub matrix row
+                for(int scol=0;scol<matrix[0].length-col+1;scol++){ //sub matrix column
+                    int sum=0;
+                    
+                    for(int k=srow;k<srow+row;k++){
+                        for(int l=scol;l<scol+col;l++){
+                            sum+=matrix[k][l];
+                        }
+                    }
+                    if(maxSum<sum){
+                        maxSum=sum;
+                        res.row = srow;
+                        res.col = scol;
+                        res.row_size = row;
+                        res.col_size = col;
                     }
                 }
+            }
+        }
+    }
     return maxSum;
 }
 }
