@@ -1,0 +1,29 @@
+import java.io.*;
+import java.util.*;
+
+class Sandy{
+    public static boolean checkpalindrome(String str){
+        for(int i=0;i<=str.length()/2;i++){
+            if(str.charAt(i)!=str.charAt(str.length()-i-1))
+                return false;
+        }return true;
+        
+    }
+    
+    
+    public static void printpalindrome(String str){
+        for(int i=0;i<=str.length();i++){
+            for(int j=i;j<str.length();j++){
+                if(checkpalindrome(str.substring(i,j+1))){
+                    System.out.println(str.substring(i,j+1));
+                }
+            }
+        }
+    }
+    
+    public static void main(String [] args){
+        Scanner sc = new Scanner(System.in);
+        String s=sc.next();
+        printpalindrome(s);
+    }
+}
