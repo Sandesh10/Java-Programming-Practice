@@ -1,0 +1,46 @@
+//Given a 2D array, find the maximum sum subarray in it.
+
+import java.io.*;
+import java.util.*;
+
+public class result {
+    public int row, col, col_size, row_size;
+}
+
+class Solution{
+    public static void main(String[] args){
+        int [][] matrix = new int[][]{
+           {1, 2, -1, -4, -20},
+                            {-8, -3, 4, 2, 1},
+                            {3, 8, 10, 1, 3},
+                            {-4, -1, 1, 7, -6}
+    };    
+    
+    result res = new result();
+    System.out.println("max sum = " + subMatrixSum(matrix, res));
+    System.out.print("row = " + res.row + " col = " + res.col + " row size =" + res.row_size + " col size = " + res.col_size);
+}
+public static int subMatrixSum(int[][] matrix, result res) {
+    int maxSum = -Integer.MAX_VALUE;
+
+    for (int i = 1; i <= matrix.length; i++)
+        for (int j = 1; j <= matrix[0].length; j++)
+            for (int iIndex = 0; iIndex < matrix.length - i + 1; iIndex++)
+                for (int jIndex = 0; jIndex < matrix[0].length - j + 1; jIndex++) {
+                    int sum = 0;
+
+                    for (int k_i = iIndex; k_i < iIndex + i; k_i++)
+                        for (int k_j = jIndex; k_j < jIndex + j; k_j++)
+                            sum += matrix[k_i][k_j];
+
+                    if (maxSum < sum) {
+                        maxSum = sum;
+                        res.row = iIndex;
+                        res.col = jIndex;
+                        res.row_size = i;
+                        res.col_size = j;
+                    }
+                }
+    return maxSum;
+}
+}
